@@ -149,32 +149,56 @@
     </main>
     @endif
 
-    <section id="koleksi-lengkap" class="max-w-7xl mx-auto px-6 py-20 bg-stone-50/50 rounded-[3rem] my-10">
-        <div class="mb-16 text-center">
-            <h3 class="mb-4 text-4xl font-bold">Resep Terbaru</h3>
-            <p class="text-stone-500">Eksplorasi hidangan lezat berdasarkan preferensi Anda.</p>
+    <section id="koleksi-lengkap" class="max-w-7xl mx-auto px-6 py-24 bg-stone-50/50 rounded-[4rem] my-20">
+        <div class="mb-20 text-center">
+            <span class="text-orange-600 text-[10px] font-black uppercase tracking-[0.4em]">Recipe Library</span>
+            <h3 class="mt-4 text-4xl font-bold md:text-5xl">Resep Terbaru</h3>
+            <p class="max-w-lg mx-auto mt-4 text-lg leading-relaxed text-stone-500">Eksplorasi hidangan lezat berdasarkan preferensi Anda.</p>
         </div>
 
-        <div class="flex flex-wrap justify-center gap-3 mb-12">
-            <button @click="activeTab = 'Semua'" :class="activeTab === 'Semua' ? 'bg-orange-600 text-white shadow-lg' : 'bg-white text-stone-600 border border-stone-200'" class="px-8 py-3 text-sm font-bold transition-all rounded-2xl">Semua</button>
+        <div class="flex flex-wrap justify-center gap-4 mb-16">
+            <button @click="activeTab = 'Semua'"
+                :class="activeTab === 'Semua' ? 'bg-orange-600 text-white soft-shadow scale-105' : 'bg-white text-stone-600 border border-stone-200 hover:border-orange-200'"
+                class="px-10 py-4 text-xs font-black tracking-widest uppercase transition-all rounded-2xl">
+                Semua
+            </button>
             @foreach($categories as $cat)
-            <button @click="activeTab = '{{ $cat->name }}'" :class="activeTab === '{{ $cat->name }}' ? 'bg-orange-600 text-white shadow-lg' : 'bg-white text-stone-600 border border-stone-200'" class="px-8 py-3 text-sm font-bold transition-all rounded-2xl">{{ $cat->name }}</button>
+            <button @click="activeTab = '{{ $cat->name }}'"
+                :class="activeTab === '{{ $cat->name }}' ? 'bg-orange-600 text-white soft-shadow scale-105' : 'bg-white text-stone-600 border border-stone-200 hover:border-orange-200'"
+                class="px-10 py-4 text-xs font-black tracking-widest uppercase transition-all rounded-2xl">
+                {{ $cat->name }}
+            </button>
             @endforeach
         </div>
 
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             @foreach($recipes->take(8) as $recipe)
-            <div x-show="activeTab === 'Semua' || activeTab === '{{ $recipe->category->name }}'" class="group bg-white rounded-[2rem] overflow-hidden border border-stone-100 hover:shadow-2xl transition-all duration-500">
-                <div class="relative h-56 overflow-hidden">
+            <div x-show="activeTab === 'Semua' || activeTab === '{{ $recipe->category->name }}'"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 translate-y-4"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 class="group bg-white rounded-[2.5rem] overflow-hidden border border-stone-100 hover:shadow-2xl transition-all duration-500 flex flex-col">
+
+                <div class="relative h-64 overflow-hidden">
                     <img src="{{ asset('storage/' . $recipe->image) }}" class="object-cover w-full h-full transition duration-700 group-hover:scale-110">
-                    <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold uppercase">{{ $recipe->difficulty }}</div>
+                    <div class="absolute top-5 right-5 bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest">
+                        {{ $recipe->difficulty }}
+                    </div>
                 </div>
-                <div class="p-6">
-                    <span class="text-orange-600 text-[10px] font-black uppercase tracking-widest">{{ $recipe->category->name }}</span>
-                    <h4 class="mt-1 text-lg font-bold transition group-hover:text-orange-600">{{ $recipe->title }}</h4>
-                    <div class="flex items-center justify-between mt-4">
-                        <div class="flex text-orange-400 text-[10px] font-bold italic">★ {{ number_format($recipe->averageRating(), 1) }}</div>
-                        <a href="{{ route('recipe.show', $recipe->id) }}" class="text-xs font-bold underline transition text-stone-900 underline-offset-4 hover:text-orange-600">Detail</a>
+
+                <div class="flex flex-col flex-grow p-8">
+                    <span class="text-orange-600 text-[9px] font-black uppercase tracking-[0.2em] mb-3">{{ $recipe->category->name }}</span>
+                    <h4 class="flex-grow mb-6 text-xl font-bold leading-tight transition group-hover:text-orange-600">{{ $recipe->title }}</h4>
+
+                    <div class="flex items-center justify-between pt-6 mt-auto border-t border-stone-50">
+                        <div class="flex items-center gap-1.5 text-orange-400 font-bold text-xs">
+                            <span>★</span>
+                            <span class="text-stone-800">{{ number_format($recipe->averageRating(), 1) }}</span>
+                        </div>
+                        <a href="{{ route('recipe.show', $recipe->id) }}"
+                               class="text-xs font-bold px-5 py-2.5 bg-stone-900 text-white rounded-xl hover:bg-orange-600 transition shadow-lg shadow-stone-200">
+                                Detail Resep
+                        </a>
                     </div>
                 </div>
             </div>
@@ -182,10 +206,10 @@
         </div>
 
         @if(count($recipes) >= 8)
-        <div class="mt-16 text-center">
-            <a href="{{ route('recipes.index') }}" class="inline-flex items-center gap-2 px-10 py-4 font-bold text-white transition-all bg-stone-900 rounded-2xl hover:bg-orange-600 hover:shadow-xl group">
-                See More Recipes
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div class="mt-20 text-center">
+            <a href="{{ route('recipes.index') }}" class="inline-flex items-center gap-4 px-12 py-5 font-bold text-white transition-all bg-stone-900 rounded-[2rem] hover:bg-orange-600 hover:shadow-2xl hover:-translate-y-1 group">
+                Lihat Semua Koleksi
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition-transform group-hover:translate-x-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
             </a>
