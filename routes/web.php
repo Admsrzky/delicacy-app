@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\RecipesController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -8,8 +9,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PageController::class, 'index'])->name('dashboard');
 
 // Route untuk Guest (Tips & Recipe Detail)
+Route::get('/recipes', [RecipesController::class, 'allRecipes'])->name('recipes.index');
 Route::get('/recipe/{recipe}', [PageController::class, 'showRecipe'])->name('recipe.show');
 Route::get('/tips/{tip}', [PageController::class, 'showTip'])->name('tips.show');
+
 
 // Route yang membutuhkan Login
 Route::middleware(['auth', 'verified'])->group(function () {

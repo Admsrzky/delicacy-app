@@ -8,9 +8,20 @@
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
-        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
-        [x-cloak] { display: none !important; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        [x-cloak] {
+            display: none !important;
+        }
+
     </style>
 </head>
 <body class="bg-[#FBFBF9] text-stone-800" x-data="{ activeTab: 'Semua' }">
@@ -27,55 +38,49 @@
 
             <div class="flex items-center gap-4">
                 @if (Route::has('login'))
-                    @auth
-                        <div class="relative" x-data="{ open: false }" @click.away="open = false">
-                            <button @click="open = !open" class="flex items-center gap-3 focus:outline-none group">
-                                <div class="hidden text-right sm:block">
-                                    <p class="text-xs font-bold leading-none text-stone-800">{{ auth()->user()->name }}</p>
-                                    <p class="text-[10px] text-stone-500 uppercase tracking-widest mt-1">Akun Saya</p>
-                                </div>
-                                <div class="relative">
-                                    <img src="{{ auth()->user()->profile_photo_url }}"
-                                         alt="{{ auth()->user()->name }}"
-                                         class="object-cover w-10 h-10 transition-all border-2 border-orange-100 rounded-full group-hover:border-orange-500">
-                                    <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
-                                </div>
-                            </button>
-
-                            <div x-show="open"
-                                 x-cloak
-                                 x-transition:enter="transition ease-out duration-200"
-                                 x-transition:enter-start="opacity-0 scale-95 translate-y-2"
-                                 x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-                                 x-transition:leave="transition ease-in duration-75"
-                                 x-transition:leave-start="opacity-100 scale-100 translate-y-0"
-                                 x-transition:leave-end="opacity-0 scale-95 translate-y-2"
-                                 class="absolute right-0 z-50 w-56 py-3 mt-3 overflow-hidden bg-white border shadow-xl border-stone-100 rounded-3xl">
-
-                                <div class="px-5 py-2 mb-2 border-b border-stone-50">
-                                    <p class="text-[10px] font-black text-stone-400 uppercase tracking-widest">Akses Cepat</p>
-                                </div>
-
-                                <a href="{{ route('user.profile') }}" class="flex items-center gap-3 px-5 py-3 text-sm transition text-stone-600 hover:bg-stone-50 hover:text-orange-600">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                                    Profil Saya
-                                </a>
-
-                                <div class="pt-2 mt-2 border-t border-stone-50">
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                                        <button type="submit" class="flex items-center w-full gap-3 px-5 py-3 text-sm text-left text-red-600 transition hover:bg-red-50">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                                            Keluar Sesi
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
+                @auth
+                <div class="relative" x-data="{ open: false }" @click.away="open = false">
+                    <button @click="open = !open" class="flex items-center gap-3 focus:outline-none group">
+                        <div class="hidden text-right sm:block">
+                            <p class="text-xs font-bold leading-none text-stone-800">{{ auth()->user()->name }}</p>
+                            <p class="text-[10px] text-stone-500 uppercase tracking-widest mt-1">Akun Saya</p>
                         </div>
-                    @else
-                        <a href="{{ route('login') }}" class="text-sm font-bold transition hover:text-orange-600">Masuk</a>
-                        <a href="{{ route('register') }}" class="bg-stone-900 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-orange-600 hover:shadow-lg transition-all">Daftar</a>
-                    @endauth
+                        <div class="relative">
+                            <img src="{{ auth()->user()->profile_photo_url }}" alt="{{ auth()->user()->name }}" class="object-cover w-10 h-10 transition-all border-2 border-orange-100 rounded-full group-hover:border-orange-500">
+                            <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
+                        </div>
+                    </button>
+
+                    <div x-show="open" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95 translate-y-2" x-transition:enter-end="opacity-100 scale-100 translate-y-0" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="opacity-100 scale-100 translate-y-0" x-transition:leave-end="opacity-0 scale-95 translate-y-2" class="absolute right-0 z-50 w-56 py-3 mt-3 overflow-hidden bg-white border shadow-xl border-stone-100 rounded-3xl">
+
+                        <div class="px-5 py-2 mb-2 border-b border-stone-50">
+                            <p class="text-[10px] font-black text-stone-400 uppercase tracking-widest">Akses Cepat</p>
+                        </div>
+
+                        <a href="{{ route('user.profile') }}" class="flex items-center gap-3 px-5 py-3 text-sm transition text-stone-600 hover:bg-stone-50 hover:text-orange-600">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                            Profil Saya
+                        </a>
+
+                        <div class="pt-2 mt-2 border-t border-stone-50">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="flex items-center w-full gap-3 px-5 py-3 text-sm text-left text-red-600 transition hover:bg-red-50">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                                    </svg>
+                                    Keluar Sesi
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                @else
+                <a href="{{ route('login') }}" class="text-sm font-bold transition hover:text-orange-600">Masuk</a>
+                <a href="{{ route('register') }}" class="bg-stone-900 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-orange-600 hover:shadow-lg transition-all">Daftar</a>
+                @endauth
                 @endif
             </div>
         </div>
@@ -115,28 +120,28 @@
                     <h4 class="pb-2 mb-4 text-lg font-bold border-b">Bahan-Bahan:</h4>
                     <ul class="grid grid-cols-2 gap-3 text-stone-500">
                         @foreach($featured->ingredients as $item)
-                            <li class="flex items-center gap-2">
-                                <span class="w-1.5 h-1.5 bg-orange-400 rounded-full"></span>
-                                <span>{{ $item['item'] }}</span>
-                            </li>
+                        <li class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 bg-orange-400 rounded-full"></span>
+                            <span>{{ $item['item'] }}</span>
+                        </li>
                         @endforeach
                     </ul>
                 </div>
 
                 <div class="space-y-4">
                     @foreach($featured->steps as $index => $step)
-                        <div class="overflow-hidden border border-stone-100 rounded-2xl" x-data="{ isOpen: {{ $index === 0 ? 'true' : 'false' }} }">
-                            <button @click="isOpen = !isOpen" class="flex items-center justify-between w-full p-5 text-left transition bg-stone-50/50 hover:bg-stone-50">
-                                <span class="flex gap-4 font-bold">
-                                    <span class="text-orange-600">Step {{ $index + 1 }}</span>
-                                    <span>{{ $step['title'] }}</span>
-                                </span>
-                                <span :class="isOpen ? 'rotate-180' : ''" class="text-xs transition-transform">▼</span>
-                            </button>
-                            <div x-show="isOpen" x-collapse class="p-5 leading-relaxed border-t text-stone-500 border-stone-100">
-                                {{ $step['desc'] }}
-                            </div>
+                    <div class="overflow-hidden border border-stone-100 rounded-2xl" x-data="{ isOpen: {{ $index === 0 ? 'true' : 'false' }} }">
+                        <button @click="isOpen = !isOpen" class="flex items-center justify-between w-full p-5 text-left transition bg-stone-50/50 hover:bg-stone-50">
+                            <span class="flex gap-4 font-bold">
+                                <span class="text-orange-600">Step {{ $index + 1 }}</span>
+                                <span>{{ $step['title'] }}</span>
+                            </span>
+                            <span :class="isOpen ? 'rotate-180' : ''" class="text-xs transition-transform">▼</span>
+                        </button>
+                        <div x-show="isOpen" x-collapse class="p-5 leading-relaxed border-t text-stone-500 border-stone-100">
+                            {{ $step['desc'] }}
                         </div>
+                    </div>
                     @endforeach
                 </div>
             </div>
@@ -151,35 +156,41 @@
         </div>
 
         <div class="flex flex-wrap justify-center gap-3 mb-12">
-            <button @click="activeTab = 'Semua'"
-                    :class="activeTab === 'Semua' ? 'bg-orange-600 text-white shadow-lg' : 'bg-white text-stone-600 border border-stone-200'"
-                    class="px-8 py-3 text-sm font-bold transition-all rounded-2xl">Semua</button>
+            <button @click="activeTab = 'Semua'" :class="activeTab === 'Semua' ? 'bg-orange-600 text-white shadow-lg' : 'bg-white text-stone-600 border border-stone-200'" class="px-8 py-3 text-sm font-bold transition-all rounded-2xl">Semua</button>
             @foreach($categories as $cat)
-                <button @click="activeTab = '{{ $cat->name }}'"
-                        :class="activeTab === '{{ $cat->name }}' ? 'bg-orange-600 text-white shadow-lg' : 'bg-white text-stone-600 border border-stone-200'"
-                        class="px-8 py-3 text-sm font-bold transition-all rounded-2xl">{{ $cat->name }}</button>
+            <button @click="activeTab = '{{ $cat->name }}'" :class="activeTab === '{{ $cat->name }}' ? 'bg-orange-600 text-white shadow-lg' : 'bg-white text-stone-600 border border-stone-200'" class="px-8 py-3 text-sm font-bold transition-all rounded-2xl">{{ $cat->name }}</button>
             @endforeach
         </div>
 
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             @foreach($recipes as $recipe)
-                <div x-show="activeTab === 'Semua' || activeTab === '{{ $recipe->category->name }}'"
-                     class="group bg-white rounded-[2rem] overflow-hidden border border-stone-100 hover:shadow-2xl transition-all duration-500">
-                    <div class="relative h-56 overflow-hidden">
-                        <img src="{{ asset('storage/' . $recipe->image) }}" class="object-cover w-full h-full transition duration-700 group-hover:scale-110">
-                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold uppercase">{{ $recipe->difficulty }}</div>
-                    </div>
-                    <div class="p-6">
-                        <span class="text-orange-600 text-[10px] font-black uppercase tracking-widest">{{ $recipe->category->name }}</span>
-                        <h4 class="mt-1 text-lg font-bold transition group-hover:text-orange-600">{{ $recipe->title }}</h4>
-                        <div class="flex items-center justify-between mt-4">
-                            <div class="flex text-orange-400 text-[10px] font-bold italic">★ {{ number_format($recipe->averageRating(), 1) }}</div>
-                            <a href="{{ route('recipe.show', $recipe->id) }}" class="text-xs font-bold underline transition text-stone-900 underline-offset-4 hover:text-orange-600">Detail</a>
-                        </div>
+            <div x-show="activeTab === 'Semua' || activeTab === '{{ $recipe->category->name }}'" class="group bg-white rounded-[2rem] overflow-hidden border border-stone-100 hover:shadow-2xl transition-all duration-500">
+                <div class="relative h-56 overflow-hidden">
+                    <img src="{{ asset('storage/' . $recipe->image) }}" class="object-cover w-full h-full transition duration-700 group-hover:scale-110">
+                    <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold uppercase">{{ $recipe->difficulty }}</div>
+                </div>
+                <div class="p-6">
+                    <span class="text-orange-600 text-[10px] font-black uppercase tracking-widest">{{ $recipe->category->name }}</span>
+                    <h4 class="mt-1 text-lg font-bold transition group-hover:text-orange-600">{{ $recipe->title }}</h4>
+                    <div class="flex items-center justify-between mt-4">
+                        <div class="flex text-orange-400 text-[10px] font-bold italic">★ {{ number_format($recipe->averageRating(), 1) }}</div>
+                        <a href="{{ route('recipe.show', $recipe->id) }}" class="text-xs font-bold underline transition text-stone-900 underline-offset-4 hover:text-orange-600">Detail</a>
                     </div>
                 </div>
+            </div>
             @endforeach
         </div>
+
+        @if(count($recipes) >= 8)
+        <div class="mt-16 text-center">
+            <a href="{{ route('recipes.index') }}" class="inline-flex items-center gap-2 px-10 py-4 font-bold text-white transition-all bg-stone-900 rounded-2xl hover:bg-orange-600 hover:shadow-xl group">
+                See More Recipes
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+            </a>
+        </div>
+        @endif
     </section>
 
     <section id="tips-masak" class="px-6 py-20 mx-auto max-w-7xl">
@@ -219,56 +230,56 @@
 
             <div class="mb-12 space-y-6">
                 @if($featured)
-                    @forelse($featured->comments()->where('is_visible', true)->latest()->get() as $comment)
-                    <div class="bg-stone-800/50 p-8 rounded-[2.5rem] border border-white/10 hover:border-orange-500/30 transition-all">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="flex gap-4">
-                                <img src="{{ $comment->user->profile_photo_url }}" class="object-cover w-12 h-12 border-2 rounded-full shadow-sm border-white/10">
-                                <div>
-                                    <h5 class="font-bold leading-tight text-white">{{ $comment->user->name }}</h5>
-                                    <div class="mt-1 text-xs text-orange-400">
-                                        @for($i=0; $i<$comment->rating; $i++) ★ @endfor
-                                    </div>
+                @forelse($featured->comments()->where('is_visible', true)->latest()->get() as $comment)
+                <div class="bg-stone-800/50 p-8 rounded-[2.5rem] border border-white/10 hover:border-orange-500/30 transition-all">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex gap-4">
+                            <img src="{{ $comment->user->profile_photo_url }}" class="object-cover w-12 h-12 border-2 rounded-full shadow-sm border-white/10">
+                            <div>
+                                <h5 class="font-bold leading-tight text-white">{{ $comment->user->name }}</h5>
+                                <div class="mt-1 text-xs text-orange-400">
+                                    @for($i=0; $i<$comment->rating; $i++) ★ @endfor
                                 </div>
                             </div>
-                            <span class="text-stone-500 text-[10px] font-bold uppercase tracking-widest">{{ $comment->created_at->diffForHumans() }}</span>
                         </div>
-                        <p class="italic leading-relaxed text-stone-300">"{{ $comment->comment }}"</p>
+                        <span class="text-stone-500 text-[10px] font-bold uppercase tracking-widest">{{ $comment->created_at->diffForHumans() }}</span>
                     </div>
-                    @empty
-                    <div class="text-center py-10 border border-white/5 rounded-[2rem]">
-                        <p class="italic text-stone-500">Belum ada ulasan untuk resep ini. Jadilah yang pertama!</p>
-                    </div>
-                    @endforelse
+                    <p class="italic leading-relaxed text-stone-300">"{{ $comment->comment }}"</p>
+                </div>
+                @empty
+                <div class="text-center py-10 border border-white/5 rounded-[2rem]">
+                    <p class="italic text-stone-500">Belum ada ulasan untuk resep ini. Jadilah yang pertama!</p>
+                </div>
+                @endforelse
                 @else
-                    <div class="text-center py-10 bg-stone-800/30 rounded-[2rem]">
-                        <p class="italic text-stone-500">Pilih resep unggulan di admin panel untuk melihat komentar.</p>
-                    </div>
+                <div class="text-center py-10 bg-stone-800/30 rounded-[2rem]">
+                    <p class="italic text-stone-500">Pilih resep unggulan di admin panel untuk melihat komentar.</p>
+                </div>
                 @endif
             </div>
 
             @if($featured)
-                @auth
-                <form action="{{ route('comment.store', $featured->id) }}" method="POST" class="bg-white rounded-[2.5rem] p-3 flex shadow-2xl">
-                    @csrf
-                    <div class="flex items-center flex-grow px-4">
-                        <select name="rating" class="mr-2 font-bold text-orange-600 bg-transparent outline-none">
-                            <option value="5">5 ★</option>
-                            <option value="4">4 ★</option>
-                            <option value="3">3 ★</option>
-                            <option value="2">2 ★</option>
-                            <option value="1">1 ★</option>
-                        </select>
-                        <input type="text" name="comment" placeholder="Bagikan pengalaman masak Anda..." class="w-full py-3 bg-transparent border-none text-stone-800 focus:outline-none placeholder-stone-400" required>
-                    </div>
-                    <button type="submit" class="px-10 py-4 font-bold text-white transition bg-orange-600 rounded-3xl hover:bg-orange-700 active:scale-95">Kirim</button>
-                </form>
-                @else
-                <div class="text-center p-12 border-2 border-dashed border-stone-800 rounded-[3rem]">
-                    <p class="mb-6 text-stone-400">Punya pendapat tentang resep ini? Berikan rating dan komentar.</p>
-                    <a href="{{ route('login') }}" class="inline-block px-10 py-4 font-bold text-white transition bg-orange-600 rounded-3xl hover:bg-orange-700">Masuk Sekarang</a>
+            @auth
+            <form action="{{ route('comment.store', $featured->id) }}" method="POST" class="bg-white rounded-[2.5rem] p-3 flex shadow-2xl">
+                @csrf
+                <div class="flex items-center flex-grow px-4">
+                    <select name="rating" class="mr-2 font-bold text-orange-600 bg-transparent outline-none">
+                        <option value="5">5 ★</option>
+                        <option value="4">4 ★</option>
+                        <option value="3">3 ★</option>
+                        <option value="2">2 ★</option>
+                        <option value="1">1 ★</option>
+                    </select>
+                    <input type="text" name="comment" placeholder="Bagikan pengalaman masak Anda..." class="w-full py-3 bg-transparent border-none text-stone-800 focus:outline-none placeholder-stone-400" required>
                 </div>
-                @endauth
+                <button type="submit" class="px-10 py-4 font-bold text-white transition bg-orange-600 rounded-3xl hover:bg-orange-700 active:scale-95">Kirim</button>
+            </form>
+            @else
+            <div class="text-center p-12 border-2 border-dashed border-stone-800 rounded-[3rem]">
+                <p class="mb-6 text-stone-400">Punya pendapat tentang resep ini? Berikan rating dan komentar.</p>
+                <a href="{{ route('login') }}" class="inline-block px-10 py-4 font-bold text-white transition bg-orange-600 rounded-3xl hover:bg-orange-700">Masuk Sekarang</a>
+            </div>
+            @endauth
             @endif
         </div>
     </section>
