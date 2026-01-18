@@ -163,7 +163,7 @@
         </div>
 
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            @foreach($recipes as $recipe)
+            @foreach($recipes->take(8) as $recipe)
             <div x-show="activeTab === 'Semua' || activeTab === '{{ $recipe->category->name }}'" class="group bg-white rounded-[2rem] overflow-hidden border border-stone-100 hover:shadow-2xl transition-all duration-500">
                 <div class="relative h-56 overflow-hidden">
                     <img src="{{ asset('storage/' . $recipe->image) }}" class="object-cover w-full h-full transition duration-700 group-hover:scale-110">
